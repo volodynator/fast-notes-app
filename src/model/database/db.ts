@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable } from 'dexie';
-import type {Task} from "../Types";
+import type { Task } from '../types';
 
 const db = new Dexie('TasksDatabase') as Dexie & {
     tasks: EntityTable<

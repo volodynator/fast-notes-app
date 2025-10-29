@@ -1,3 +1,3 @@
-export * from "./Task";
-export * from "./Settings";
-export * from "./Priority";
+export * from './Priority';
+export * from './Settings';
+export * from './Task';

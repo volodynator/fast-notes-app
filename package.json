@@ -13,6 +13,7 @@
     "dexie": "^4.2.1",
     "dexie-react-hooks": "^4.2.0",
     "inversify": "^7.10.4",
+    "lucide-react": "^0.548.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "reflect-metadata": "^0.2.2"

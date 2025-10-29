@@ -1,89 +1,27 @@
-import {useState} from "react";
-import {db} from "./model/database/db.ts";
-import {useLiveQuery} from "dexie-react-hooks";
+import { DBManagerImpl, type Task } from "./model";
+import { TaskList } from "./reactContainer";
 
-export function AddTaskForm() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [completed, setCompleted] = useState(false);
-  const [category, setCategory] = useState('');
-  const [priority, setPriority] = useState({name: "priority", color: "red"});
-  const [dueDate, setDueDate] = useState(new Date());
-  const [status, setStatus] = useState('');
+const dbManager = new DBManagerImpl();
+await dbManager.clearAllTasks();
 
-  async function addTask() {
-    try {
-      // Add the new friend!
-      const id = await db.tasks.add({
-        title,
-        description,
-        completed,
-        category,
-        priority,
-        dueDate
-      });
+const task1 =
+    {
+      id: "1",
+      title: "Prepare presentation",
+      description: "Finish slides and rehearse before meeting.",
+      completed: false,
+      category: "Work",
+      priority: {name: "Срочно!", color:""},
+      dueDate: new Date()
+    } as Task;
 
-      setStatus(`Task ${title} successfully added. Got id ${id}`);
-      setTitle('');
-      setDescription('');
-      setCompleted(false);
-      setCategory('');
-      setPriority({name: "priority", color: "red"});
-      setDueDate(new Date());
+await dbManager.create(task1);
 
-    } catch (error) {
-      setStatus(`Failed to add ${title}: ${error}`);
-    }
-  }
-
-  return (
-      <>
-        <p>{status}</p>
-        Title:
-        <input
-            type="text"
-            value={title}
-            onChange={(ev) => setTitle(ev.target.value)}
-        />
-        Description:
-        <input
-            type="text"
-            value={description}
-            onChange={(ev) => setDescription(ev.target.value)}
-        />
-        Category:
-        <input
-            type="text"
-            value={category}
-            onChange={(ev) => setCategory(ev.target.value)}
-        />
-        <button onClick={addTask}>Add</button>
-      </>
-  );
-}
-
-export function TasksList() {
-  const friends = useLiveQuery(() => db.tasks.toArray());
-
-  return (
-      <ul>
-        {friends?.map((task) => (
-            <li key={task.id}>
-              {task.title}, {task.description}, {task.category}, {task.priority.name}, {task.dueDate.toISOString()};
-            </li>
-        ))}
-      </ul>
-  );
-}
+const tasks = await dbManager.showActiveTasks();
 
 export const App = () => (
     <>
-      <h1>My simple Dexie app</h1>
-
-      <h2>Add Task</h2>
-      <AddTaskForm />
-
-      <h2>Tasks</h2>
-      <TasksList  />
+      <h1>Fast-Notes prototype</h1>
+        <TaskList tasks={tasks}/>
     </>
 );

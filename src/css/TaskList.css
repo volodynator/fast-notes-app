@@ -1,0 +1,11 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f6fa;
+  padding: 40px;
+  box-sizing: border-box;
+  align-items: center;
+}
