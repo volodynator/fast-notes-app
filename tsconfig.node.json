@@ -20,7 +20,11 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /*Inversify*/
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
   "include": ["vite.config.ts"]
 }
