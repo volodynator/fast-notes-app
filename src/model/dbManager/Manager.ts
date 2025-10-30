@@ -3,7 +3,7 @@ import type { DBManager } from "./Interface";
 import { db } from "../database";
 import { TaskNotFoundError } from "../../error/TaskNotFoundError";
 
-export class DBManagerImpl implements DBManager {
+class DBManagerImpl implements DBManager {
     async create(task: Task): Promise<string> {
         const id = await db.tasks.add(task);
         return id;
@@ -48,3 +48,5 @@ export class DBManagerImpl implements DBManager {
     }
 
 }
+
+export const manager: DBManagerImpl = new DBManagerImpl();
