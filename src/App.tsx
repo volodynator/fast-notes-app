@@ -1,27 +1,27 @@
-import { DBManagerImpl, type Task } from "./model";
-import { TaskList } from "./reactContainer";
+import {manager, type Task} from "./model";
+import { useEffect, useState } from "react";
+import {TaskList} from "./reactContainer";
+import {TaskCreator} from "./reactContainer";
 
-const dbManager = new DBManagerImpl();
-await dbManager.clearAllTasks();
+export function App() {
+    const [tasks, setTasks] = useState<Task[]>([]);
 
-const task1 =
-    {
-      id: "1",
-      title: "Prepare presentation",
-      description: "Finish slides and rehearse before meeting.",
-      completed: false,
-      category: "Work",
-      priority: {name: "Срочно!", color:""},
-      dueDate: new Date()
-    } as Task;
+    async function reloadTasks() {
+        const result = await manager.showActiveTasks();
+        setTasks(result);
+    }
 
-await dbManager.create(task1);
+    useEffect(() => {
+        reloadTasks();
+    }, []);
 
-const tasks = await dbManager.showActiveTasks();
+    return (
+        <div>
+            <h1>Active Tasks</h1>
+            <TaskList tasks={tasks}/>
+            <h1>Add new task</h1>
+            <TaskCreator onTaskAdded={reloadTasks}/>
+        </div>
+    );
+}
 
-export const App = () => (
-    <>
-      <h1>Fast-Notes prototype</h1>
-        <TaskList tasks={tasks}/>
-    </>
-);
