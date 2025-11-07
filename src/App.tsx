@@ -2,6 +2,7 @@ import {manager, type Task} from "./model";
 import { useEffect, useState } from "react";
 import {TaskList} from "./reactContainer";
 import {TaskCreator} from "./reactContainer";
+import { revivedClassifier } from "./classifier/classifier";
 
 export function App() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -11,8 +12,14 @@ export function App() {
         setTasks(result);
     }
 
+    async function classify(task: string) {
+        const result = await revivedClassifier.categorize(task);
+        console.log(result);
+    }
+
     useEffect(() => {
         reloadTasks();
+        classify("Уборка");
     }, []);
 
     return (
