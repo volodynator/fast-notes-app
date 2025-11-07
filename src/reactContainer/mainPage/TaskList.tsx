@@ -8,10 +8,15 @@ interface TaskListProps {
 
 export function TaskList({ tasks }: TaskListProps) {
   return (
-    <div className="grid gap-4">
+    <table>
+      <tr>
+        <th>Priority</th>
+        <th>Category</th>
+        <th>Title</th>
+      </tr>
       {tasks.map((task) => (
         <TaskCard task={task} />
       ))}
-    </div>
+    </table>
   );
 }

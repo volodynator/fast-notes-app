@@ -1,5 +1,6 @@
 import { manager, type Task } from '../../model';
 import { useState } from 'react';
+import { revivedClassifier } from '../../classifier/classifier';
 
 export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
   const [title, setTitle] = useState('');
@@ -10,13 +11,25 @@ export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
   const [dueDate, setDueDate] = useState(new Date());
   const [status, setStatus] = useState('');
 
+  async function classify(task: string): Promise<string> {
+    const result = await revivedClassifier.categorize(task);
+    return result;
+  }
+
   async function addTask() {
     try {
+      let finalCategory = category;
+
+      if (category === '') {
+        console.log('Category empty');
+        finalCategory = await classify(title);
+      }
+
       const newTask = {
         title: title,
         description: description,
         completed: completed,
-        category: category,
+        category: finalCategory,
         priority: priority,
         dueDate: dueDate,
       } as Task;
