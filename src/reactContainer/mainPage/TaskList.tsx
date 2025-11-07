@@ -1,6 +1,6 @@
 import type { Task } from '../../model';
 import TaskCard from './Task';
-import '../../css/TaskCard.css';
+import '../../css/TaskList.css';
 
 interface TaskListProps {
   tasks: Task[];

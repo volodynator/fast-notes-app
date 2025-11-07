@@ -1,15 +1,15 @@
-import type { Task } from '../types';
+import type { Priority, Task } from '../types';
 import type { DBManager } from './Interface';
 import { db } from '../database';
 import { TaskNotFoundError } from '../../error/TaskNotFoundError';
 
 class DBManagerImpl implements DBManager {
-  async create(task: Task): Promise<string> {
+  async createTask(task: Task): Promise<string> {
     const id = await db.tasks.add(task);
     return id;
   }
 
-  async read(id: string): Promise<Task> {
+  async readTask(id: string): Promise<Task> {
     const task = await db.tasks.get({ id: id });
     if (task) {
       return task;
@@ -18,7 +18,7 @@ class DBManagerImpl implements DBManager {
     }
   }
 
-  async update(id: string, updatedTask: Task): Promise<void> {
+  async updateTask(id: string, updatedTask: Task): Promise<void> {
     const existing = await db.tasks.get(id);
     if (!existing) {
       throw new TaskNotFoundError(id);
@@ -26,7 +26,7 @@ class DBManagerImpl implements DBManager {
     await db.tasks.update(id, { ...existing, ...updatedTask });
   }
 
-  async delete(id: string): Promise<void> {
+  async deleteTask(id: string): Promise<void> {
     await db.tasks.delete(id);
   }
 
@@ -44,6 +44,36 @@ class DBManagerImpl implements DBManager {
 
   async clearAllTasks(): Promise<void> {
     await db.tasks.clear();
+  }
+
+  async createPriority(priority: Priority): Promise<string> {
+    const id = await db.priorities.add(priority);
+    return id;
+  }
+
+  async readPriority(name: string): Promise<Priority> {
+    const priority = await db.priorities.get({ name: name });
+    if (priority) {
+      return priority;
+    } else {
+      throw new Error();
+    }
+  }
+
+  async updatePriority(name: string, updatedPriority: Priority): Promise<void> {
+    const existing = await db.priorities.get(name);
+    if (!existing) {
+      throw new Error();
+    }
+    await db.priorities.update(name, { ...existing, ...updatedPriority });
+  }
+
+  async deletePriority(name: string): Promise<void> {
+    await db.priorities.delete(name);
+  }
+
+  async showPriorities(): Promise<Priority[]> {
+    return db.priorities.toArray();
   }
 }
 

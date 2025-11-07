@@ -34,7 +34,7 @@ export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
         dueDate: dueDate,
       } as Task;
 
-      const id = manager.create(newTask);
+      const id = manager.createTask(newTask);
 
       setStatus(`Task ${title} successfully added. Got id ${id}`);
       setTitle('');

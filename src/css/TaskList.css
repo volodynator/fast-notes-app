@@ -1,11 +1,14 @@
-.task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #f5f6fa;
-  padding: 40px;
-  box-sizing: border-box;
-  align-items: center;
+table {
+  table-layout: fixed;
+  width: 50%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+}
+
+
+table, th, td {
+  border: 1px solid;
 }
