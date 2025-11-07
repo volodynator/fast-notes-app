@@ -1,6 +1,6 @@
-import { Trash2, Check } from "lucide-react";
-import type { Task } from "../../model";
-import "../../css/TaskCard.css";
+import { Trash2, Check } from 'lucide-react';
+import type { Task } from '../../model';
+import '../../css/TaskCard.css';
 
 interface TaskCardProps {
   task: Task;
@@ -16,7 +16,12 @@ export default function TaskCard({ task }: TaskCardProps) {
           <span className="task-card__category">{task.category}</span>
           <div className="task-card__date-time">
             <span>{task.dueDate.toLocaleDateString()}</span>
-            <span>{task.dueDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+            <span>
+              {task.dueDate.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </span>
           </div>
         </div>
 
@@ -37,4 +42,3 @@ export default function TaskCard({ task }: TaskCardProps) {
     </div>
   );
 }
-
