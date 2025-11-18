@@ -1,8 +1,13 @@
-import type { Task } from "../types";
+import type { Priority, Task } from '../types';
 
 export interface DBManager {
-    create(task: Task): Promise<string>;
-    read(id: string): Promise<Task>;
-    update(id: string, updatedTask: Task): Promise<void>;
-    delete(id: string): Promise<void>;
+  createTask(task: Task): Promise<string>;
+  readTask(id: string): Promise<Task>;
+  updateTask(id: string, updatedTask: Task): Promise<void>;
+  deleteTask(id: string): Promise<void>;
+
+  createPriority(task: Priority): Promise<string>;
+  readPriority(name: string): Promise<Priority>;
+  updatePriority(name: string, updatedPriority: Priority): Promise<void>;
+  deletePriority(name: string): Promise<void>;
 }
