@@ -17,8 +17,8 @@ export function App() {
   }
 
   async function clearTasksAndReload() {
-    manager.clearAllTasks();
-    reloadTasksAndPriorities();
+    await manager.clearAllTasks();
+    await reloadTasksAndPriorities();
   }
 
   useEffect(() => {
@@ -28,12 +28,18 @@ export function App() {
   return (
     <div>
       <h1>Active Tasks</h1>
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} onUpdated={reloadTasksAndPriorities} />
       <button onClick={clearTasksAndReload}>Clear Tasks</button>
       <h1>Add new task</h1>
-      <TaskCreator onTaskAdded={reloadTasksAndPriorities} />
+      <TaskCreator
+        priorities={priorities}
+        onUpdated={reloadTasksAndPriorities}
+      />
       <h1>Priorities</h1>
-      <PriorityList priorities={priorities} />
+      <PriorityList
+        priorities={priorities}
+        onUpdated={reloadTasksAndPriorities}
+      />
       <h1>Add new priority</h1>
       <PriorityCreator onPriorityAdded={reloadTasksAndPriorities} />
     </div>
