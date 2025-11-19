@@ -1,5 +1,6 @@
-import { manager, type Task } from '../../model';
+import { manager, type Priority, type Task } from '../../model';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { revivedClassifier } from '../../classifier/classifier';
 
 export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
@@ -7,9 +8,16 @@ export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
   const [description, setDescription] = useState('');
   const [completed, setCompleted] = useState(false);
   const [category, setCategory] = useState('');
-  const [priority, setPriority] = useState({ name: 'priority', color: 'red' });
+  const [priorities, setPriorities] = useState<Priority[]>([]);
+  const [selectedPriority, setSelectedPriority] = useState<Priority>();
   const [dueDate, setDueDate] = useState(new Date());
   const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    manager.showPriorities().then((data) => {
+      setPriorities(data);
+    });
+  }, []);
 
   async function classify(task: string): Promise<string> {
     const result = await revivedClassifier.categorize(task);
@@ -30,7 +38,7 @@ export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
         description: description,
         completed: completed,
         category: finalCategory,
-        priority: priority,
+        priority: selectedPriority,
         dueDate: dueDate,
       } as Task;
 
@@ -41,7 +49,7 @@ export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
       setDescription('');
       setCompleted(false);
       setCategory('');
-      setPriority({ name: 'priority', color: 'red' });
+      setSelectedPriority(undefined);
       setDueDate(new Date());
       onTaskAdded();
     } catch (error) {
@@ -70,6 +78,25 @@ export function TaskCreator({ onTaskAdded }: { onTaskAdded: () => void }) {
         value={category}
         onChange={(ev) => setCategory(ev.target.value)}
       />
+      Priority:
+      {
+        <select
+          value={selectedPriority?.name ?? ''}
+          onChange={(e) => {
+            const name = e.target.value;
+            const pr = priorities.find((p) => p.name === name);
+            setSelectedPriority(pr);
+          }}
+        >
+          <option value="">Please choose one option</option>
+
+          {priorities.map((p) => (
+            <option key={p.name} value={p.name}>
+              {p.name}
+            </option>
+          ))}
+        </select>
+      }
       <button onClick={addTask}>Add</button>
     </>
   );
