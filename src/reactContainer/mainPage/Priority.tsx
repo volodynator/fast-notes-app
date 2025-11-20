@@ -1,5 +1,7 @@
 import { manager, type Priority } from '../../model';
-import '../../css/TaskCard.css';
+import '../../css/Button.css';
+import '../../css/Form.css';
+import '../../css/Table.css';
 
 interface PriorityProps {
   priority: Priority;
@@ -10,9 +12,17 @@ export default function PriorityCard({ priority, onUpdated }: PriorityProps) {
   return (
     <tr>
       <td>{priority.name}</td>
-      <td style={{ backgroundColor: priority.color }}>{priority.color}</td>
+      <td>
+        <div className="priority-color-cell">
+          <div
+            className="color-indicator"
+            style={{ backgroundColor: priority.color }}
+          />
+        </div>
+      </td>
       <td>
         <button
+          className="danger"
           onClick={() => {
             manager.deletePriority(priority.name);
             onUpdated();

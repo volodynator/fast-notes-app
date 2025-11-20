@@ -35,11 +35,11 @@ class DBManagerImpl implements DBManager {
   }
 
   async showActiveTasks(): Promise<Task[]> {
-    return await db.tasks.filter(task => task.completed === false).toArray();
+    return await db.tasks.filter((task) => task.completed === false).toArray();
   }
 
   async showInactiveTasks(): Promise<Task[]> {
-    return await db.tasks.filter(task => task.completed === true).toArray();
+    return await db.tasks.filter((task) => task.completed === true).toArray();
   }
 
   async clearAllTasks(): Promise<void> {

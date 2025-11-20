@@ -1,6 +1,9 @@
 import { manager, type Priority, type Task } from '../../model';
 import { useState } from 'react';
 import { revivedClassifier } from '../../classifier/classifier';
+import '../../css/Button.css';
+import '../../css/Form.css';
+import '../../css/Table.css';
 
 interface TaskCreatorProps {
   priorities: Priority[];
@@ -12,7 +15,9 @@ export function TaskCreator({ priorities, onUpdated }: TaskCreatorProps) {
   const [description, setDescription] = useState('');
   const [completed, setCompleted] = useState(false);
   const [category, setCategory] = useState('');
-  const [selectedPriority, setSelectedPriority] = useState<Priority | undefined>();
+  const [selectedPriority, setSelectedPriority] = useState<
+    Priority | undefined
+  >();
   const [dueDate, setDueDate] = useState(new Date());
   const [status, setStatus] = useState('');
 
@@ -31,7 +36,10 @@ export function TaskCreator({ priorities, onUpdated }: TaskCreatorProps) {
           finalCategory = await classify(title);
         }
 
-        const taskPriority = selectedPriority ?? { name: "Unspecified", color: "#000000" };
+        const taskPriority = selectedPriority ?? {
+          name: 'Unspecified',
+          color: '#000000',
+        };
 
         const newTask = {
           title: title,
@@ -60,46 +68,58 @@ export function TaskCreator({ priorities, onUpdated }: TaskCreatorProps) {
   }
 
   return (
-    <>
-      <p>{status}</p>
-      Title:
-      <input
-        type="text"
-        value={title}
-        onChange={(ev) => setTitle(ev.target.value)}
-      />
-      Description:
-      <input
-        type="text"
-        value={description}
-        onChange={(ev) => setDescription(ev.target.value)}
-      />
-      Category:
-      <input
-        type="text"
-        value={category}
-        onChange={(ev) => setCategory(ev.target.value)}
-      />
-      Priority:
-      {
-        <select
-          value={selectedPriority?.name ?? ''}
-          onChange={(e) => {
-            const name = e.target.value;
-            const pr = priorities.find((p) => p.name === name);
-            setSelectedPriority(pr);
-          }}
-        >
-          <option value="">Please choose one option</option>
+    <div className="form-container form-container--compact">
+      {status && <div className="status-message">{status}</div>}
 
-          {priorities.map((p) => (
-            <option key={p.name} value={p.name}>
-              {p.name}
-            </option>
-          ))}
-        </select>
-      }
-      <button onClick={addTask}>Add</button>
-    </>
+      <div className="form-grid">
+        <div className="form-row">
+          <label>Title</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(ev) => setTitle(ev.target.value)}
+          />
+        </div>
+
+        <div className="form-row">
+          <label>Category</label>
+          <input
+            type="text"
+            value={category}
+            onChange={(ev) => setCategory(ev.target.value)}
+          />
+        </div>
+
+        <div className="form-row form-row--full">
+          <label>Description</label>
+          <textarea
+            value={description}
+            onChange={(ev) => setDescription(ev.target.value)}
+            rows={2}
+          />
+        </div>
+
+        <div className="form-row form-row--full">
+          <label>Priority</label>
+          <select
+            value={selectedPriority?.name ?? ''}
+            onChange={(e) => {
+              const name = e.target.value;
+              const pr = priorities.find((p) => p.name === name);
+              setSelectedPriority(pr);
+            }}
+          >
+            <option value="">Please choose one option</option>
+            {priorities.map((p) => (
+              <option key={p.name} value={p.name}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <button onClick={addTask}>Add Task</button>
+    </div>
   );
 }
