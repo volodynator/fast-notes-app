@@ -1,8 +1,8 @@
-import type { Task } from '../../model';
+import type { Task } from '../../../model';
 import TaskCard from './Task';
-import '../../css/Button.css';
-import '../../css/Form.css';
-import '../../css/Table.css';
+import '../../../css/Button.css';
+import '../../../css/Form.css';
+import '../../../css/Table.css';
 
 interface TaskListProps {
   tasks: Task[];

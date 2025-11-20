@@ -1,9 +1,9 @@
-import { manager, type Priority, type Task } from '../../model';
+import { manager, type Priority, type Task } from '../../../model';
 import { useState } from 'react';
-import { revivedClassifier } from '../../classifier/classifier';
-import '../../css/Button.css';
-import '../../css/Form.css';
-import '../../css/Table.css';
+import { revivedClassifier } from '../../../classifier/classifier';
+import '../../../css/Button.css';
+import '../../../css/Form.css';
+import '../../../css/Table.css';
 
 interface TaskCreatorProps {
   priorities: Priority[];
