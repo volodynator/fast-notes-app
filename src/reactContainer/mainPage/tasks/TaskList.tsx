@@ -6,10 +6,10 @@ import '../../../css/Table.css';
 
 interface TaskListProps {
   tasks: Task[];
-  onUpdated: () => void;
+  renderActions: (task: Task) => React.ReactNode;
 }
 
-export function TaskList({ tasks, onUpdated }: TaskListProps) {
+export function TaskList({ tasks, renderActions }: TaskListProps) {
   return (
     <table>
       <thead>
@@ -22,7 +22,7 @@ export function TaskList({ tasks, onUpdated }: TaskListProps) {
       </thead>
       <tbody>
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} onUpdated={onUpdated} />
+          <TaskCard key={task.id} task={task} renderActions={renderActions} />
         ))}
       </tbody>
     </table>

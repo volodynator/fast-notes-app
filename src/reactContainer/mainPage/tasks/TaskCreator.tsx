@@ -18,7 +18,9 @@ export function TaskCreator({ priorities, onUpdated }: TaskCreatorProps) {
   const [selectedPriority, setSelectedPriority] = useState<
     Priority | undefined
   >();
-  const [dueDate, setDueDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState('');
+  const [notificationDate, setNotificationDate] = useState('');
+  const [notificationTime, setNotificationTime] = useState('');
   const [status, setStatus] = useState('');
 
   async function classify(task: string): Promise<string> {
@@ -47,7 +49,11 @@ export function TaskCreator({ priorities, onUpdated }: TaskCreatorProps) {
           completed: completed,
           category: finalCategory,
           priority: taskPriority,
+          createdDate: new Date().toDateString(),
           dueDate: dueDate,
+          notificationDate: notificationDate,
+          notificationTime: notificationTime,
+          timeSpent: 0,
         } as Task;
 
         const id = await manager.createTask(newTask);
@@ -59,7 +65,9 @@ export function TaskCreator({ priorities, onUpdated }: TaskCreatorProps) {
         setCompleted(false);
         setCategory('');
         setSelectedPriority(undefined);
-        setDueDate(new Date());
+        setDueDate('');
+        setNotificationDate('');
+        setNotificationTime('');
         onUpdated();
       }
     } catch (error) {
@@ -87,6 +95,29 @@ export function TaskCreator({ priorities, onUpdated }: TaskCreatorProps) {
             type="text"
             value={category}
             onChange={(ev) => setCategory(ev.target.value)}
+          />
+        </div>
+
+        <div className="form-row">
+          <label>Due Date</label>
+          <input
+            type="date"
+            value={dueDate}
+            onChange={(ev) => setDueDate(ev.target.value)}
+          />
+        </div>
+
+        <div className="form-row form-row--full">
+          <label>Notification</label>
+          <input
+            type="date"
+            value={notificationDate}
+            onChange={(ev) => setNotificationDate(ev.target.value)}
+          />
+          <input
+            type="time"
+            value={notificationTime}
+            onChange={(ev) => setNotificationTime(ev.target.value)}
           />
         </div>
 

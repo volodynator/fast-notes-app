@@ -34,6 +34,10 @@ class DBManagerImpl implements DBManager {
     await db.tasks.update(id, { completed: true });
   }
 
+  async reactivateTask(id: string): Promise<void> {
+    await db.tasks.update(id, { completed: false });
+  }
+
   async showActiveTasks(): Promise<Task[]> {
     return await db.tasks.filter((task) => task.completed === false).toArray();
   }

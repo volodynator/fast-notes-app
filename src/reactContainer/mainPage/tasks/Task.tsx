@@ -1,14 +1,14 @@
-import { manager, type Task } from '../../../model';
+import { type Task } from '../../../model';
 import '../../../css/Button.css';
 import '../../../css/Form.css';
 import '../../../css/Table.css';
 
 interface TaskCardProps {
   task: Task;
-  onUpdated: () => void;
+  renderActions: (task: Task) => React.ReactNode;
 }
 
-export default function TaskCard({ task, onUpdated }: TaskCardProps) {
+export default function TaskCard({ task, renderActions }: TaskCardProps) {
   return (
     <tr>
       <td>
@@ -22,16 +22,7 @@ export default function TaskCard({ task, onUpdated }: TaskCardProps) {
       </td>
       <td>{task.category}</td>
       <td>{task.title}</td>
-      <td>
-        <button
-          onClick={async () => {
-            await manager.completeTask(task.id);
-            onUpdated();
-          }}
-        >
-          Complete task
-        </button>
-      </td>
+      <td>{renderActions(task)}</td>
     </tr>
   );
 }

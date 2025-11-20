@@ -1,3 +1,3 @@
 export * from './SearchBar';
-export * from './activeTasks';
+export * from './tasks';
 export * from './priorities';

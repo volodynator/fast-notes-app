@@ -10,18 +10,31 @@ import './css/Form.css';
 import './css/Table.css';
 
 export function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [activeTasks, setActiveTasks] = useState<Task[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
   const [priorities, setPriorities] = useState<Priority[]>([]);
 
   async function reloadTasksAndPriorities() {
-    const tasks = await manager.showActiveTasks();
+    const activeTasks = await manager.showActiveTasks();
+    const completedTasks = await manager.showInactiveTasks();
     const priorities = await manager.showPriorities();
-    setTasks(tasks);
+    setActiveTasks(activeTasks);
+    setCompletedTasks(completedTasks);
     setPriorities(priorities);
   }
 
   async function clearTasksAndReload() {
     await manager.clearAllTasks();
+    await reloadTasksAndPriorities();
+  }
+
+  async function completeTaskAndReload(task: Task): Promise<void> {
+    await manager.completeTask(task.id);
+    await reloadTasksAndPriorities();
+  }
+
+  async function reactivateTaskAndReload(task: Task): Promise<void> {
+    await manager.reactivateTask(task.id);
     await reloadTasksAndPriorities();
   }
 
@@ -34,7 +47,26 @@ export function App() {
       <div className="main-content">
         <div className="section">
           <h1>Active Tasks</h1>
-          <TaskList tasks={tasks} onUpdated={reloadTasksAndPriorities} />
+          <TaskList
+            tasks={activeTasks}
+            renderActions={(task) => (
+              <button onClick={() => completeTaskAndReload(task)}>
+                Complete
+              </button>
+            )}
+          />
+        </div>
+
+        <div className="section">
+          <h1>Completed Tasks</h1>
+          <TaskList
+            tasks={completedTasks}
+            renderActions={(task) => (
+              <button onClick={() => reactivateTaskAndReload(task)}>
+                Reactivate
+              </button>
+            )}
+          />
         </div>
 
         <div className="section">
