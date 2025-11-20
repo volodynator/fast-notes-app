@@ -799,7 +799,27 @@ body {
   top: var(--space-32);
   align-self: start;
   max-height: calc(100vh - 64px);
+}
+
+.sidebar .section {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+  min-height: 0;
+  flex-shrink: 1;
+}
+
+.sidebar .section h2 {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: var(--color-surface);
+  z-index: 1;
+  padding-bottom: var(--space-12);
+}
+
+.sidebar .section > *:not(h2) {
+  flex-shrink: 0;
 }
 
 /* Section styling */

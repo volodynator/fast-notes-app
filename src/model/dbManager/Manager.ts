@@ -31,11 +31,14 @@ class DBManagerImpl implements DBManager {
   }
 
   async completeTask(id: string): Promise<void> {
-    await db.tasks.update(id, { completed: true, doneDate: new Date().toDateString() });
+    await db.tasks.update(id, {
+      completed: true,
+      doneDate: new Date().toDateString(),
+    });
   }
 
   async reactivateTask(id: string): Promise<void> {
-    await db.tasks.update(id, { completed: false, doneDate: "" });
+    await db.tasks.update(id, { completed: false, doneDate: '' });
   }
 
   async showActiveTasks(): Promise<Task[]> {

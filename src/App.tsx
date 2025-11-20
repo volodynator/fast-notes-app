@@ -8,6 +8,7 @@ import './css/App.css';
 import './css/Button.css';
 import './css/Form.css';
 import './css/Table.css';
+import { TimerManager } from './reactContainer/mainPage/timer';
 
 export function App() {
   const [activeTasks, setActiveTasks] = useState<Task[]>([]);
@@ -96,6 +97,12 @@ export function App() {
         <div className="section">
           <h2>Add new priority</h2>
           <PriorityCreator onPriorityAdded={reloadTasksAndPriorities} />
+        </div>
+        <div className="section">
+          <TimerManager
+            tasks={activeTasks}
+            onTimerEnded={reloadTasksAndPriorities}
+          />
         </div>
       </div>
     </div>

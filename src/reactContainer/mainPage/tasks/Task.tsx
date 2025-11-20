@@ -11,6 +11,7 @@ interface TaskCardProps {
 export default function TaskCard({ task, renderActions }: TaskCardProps) {
   return (
     <tr>
+      <td>{task.title}</td>
       <td>
         <div className="priority-badge-container">
           <span
@@ -21,7 +22,7 @@ export default function TaskCard({ task, renderActions }: TaskCardProps) {
         </div>
       </td>
       <td>{task.category}</td>
-      <td>{task.title}</td>
+      <td>{task.timeSpent ? task.timeSpent : 0}</td>
       <td>{renderActions(task)}</td>
     </tr>
   );

@@ -14,9 +14,10 @@ export function TaskList({ tasks, renderActions }: TaskListProps) {
     <table>
       <thead>
         <tr>
+          <th>Title</th>
           <th>Priority</th>
           <th>Category</th>
-          <th>Title</th>
+          <th>Minutes Spent</th>
           <th>Action</th>
         </tr>
       </thead>
