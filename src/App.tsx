@@ -4,6 +4,10 @@ import { TaskList } from './reactContainer';
 import { TaskCreator } from './reactContainer';
 import { PriorityList } from './reactContainer/mainPage/Priorities';
 import { PriorityCreator } from './reactContainer/mainPage/PriorityCreator';
+import './css/App.css';
+import './css/Button.css';
+import './css/Form.css';
+import './css/Table.css';
 
 export function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -17,8 +21,8 @@ export function App() {
   }
 
   async function clearTasksAndReload() {
-    manager.clearAllTasks();
-    reloadTasksAndPriorities();
+    await manager.clearAllTasks();
+    await reloadTasksAndPriorities();
   }
 
   useEffect(() => {
@@ -26,16 +30,42 @@ export function App() {
   }, []);
 
   return (
-    <div>
-      <h1>Active Tasks</h1>
-      <TaskList tasks={tasks} />
-      <button onClick={clearTasksAndReload}>Clear Tasks</button>
-      <h1>Add new task</h1>
-      <TaskCreator onTaskAdded={reloadTasksAndPriorities} />
-      <h1>Priorities</h1>
-      <PriorityList priorities={priorities} />
-      <h1>Add new priority</h1>
-      <PriorityCreator onPriorityAdded={reloadTasksAndPriorities} />
+    <div className="app-container">
+      <div className="main-content">
+        <div className="section">
+          <h1>Active Tasks</h1>
+          <TaskList tasks={tasks} onUpdated={reloadTasksAndPriorities} />
+        </div>
+
+        <div className="section">
+          <h1>Add new task</h1>
+          <TaskCreator
+            priorities={priorities}
+            onUpdated={reloadTasksAndPriorities}
+          />
+        </div>
+
+        <button
+          className="secondary clear-button"
+          onClick={clearTasksAndReload}
+        >
+          Clear Tasks
+        </button>
+      </div>
+      <div className="sidebar">
+        <div className="section">
+          <h1>Priorities</h1>
+          <PriorityList
+            priorities={priorities}
+            onUpdated={reloadTasksAndPriorities}
+          />
+        </div>
+
+        <div className="section">
+          <h2>Add new priority</h2>
+          <PriorityCreator onPriorityAdded={reloadTasksAndPriorities} />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,8 @@
 import { manager, type Priority } from '../../model';
 import { useState } from 'react';
+import '../../css/Button.css';
+import '../../css/Form.css';
+import '../../css/Table.css';
 
 export function PriorityCreator({
   onPriorityAdded,
@@ -27,20 +30,26 @@ export function PriorityCreator({
   }
 
   return (
-    <>
-      Name:
-      <input
-        type="text"
-        value={name}
-        onChange={(ev) => setName(ev.target.value)}
-      />
-      Color:
-      <input
-        type="color"
-        value={color}
-        onChange={(ev) => setColor(ev.target.value)}
-      />
-      <button onClick={addPriority}>Add</button>
-    </>
+    <div className="form-container">
+      <div className="form-row">
+        <label>Name</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(ev) => setName(ev.target.value)}
+        />
+      </div>
+
+      <div className="form-row">
+        <label>Color</label>
+        <input
+          type="color"
+          value={color}
+          onChange={(ev) => setColor(ev.target.value)}
+        />
+      </div>
+
+      <button onClick={addPriority}>Add Priority</button>
+    </div>
   );
 }
