@@ -49,8 +49,8 @@ export const Timer = ({ timeToCountdown, onComplete }: TimerProps) => {
   const seconds = Math.floor((time % 60000) / 1000);
 
   return (
-    <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>
+    <span className="running-timer-time">
       {minutes}:{seconds.toString().padStart(2, '0')}
-    </div>
+    </span>
   );
 };

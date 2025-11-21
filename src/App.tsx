@@ -44,65 +44,67 @@ export function App() {
   }, []);
 
   return (
-    <div className="app-container">
-      <div className="main-content">
-        <div className="section">
-          <h1>Active Tasks</h1>
-          <TaskList
-            tasks={activeTasks}
-            renderActions={(task) => (
-              <button onClick={() => completeTaskAndReload(task)}>
-                Complete
-              </button>
-            )}
-          />
-        </div>
-
-        <div className="section">
-          <h1>Completed Tasks</h1>
-          <TaskList
-            tasks={completedTasks}
-            renderActions={(task) => (
-              <button onClick={() => reactivateTaskAndReload(task)}>
-                Reactivate
-              </button>
-            )}
-          />
-        </div>
-
-        <div className="section">
-          <h1>Add new task</h1>
-          <TaskCreator
-            priorities={priorities}
-            onUpdated={reloadTasksAndPriorities}
-          />
-        </div>
-
-        <button
-          className="secondary clear-button"
-          onClick={clearTasksAndReload}
-        >
-          Clear Tasks
-        </button>
+    <div>
+      <div className="timer">
+        <TimerManager
+          tasks={activeTasks}
+          onTimerEnded={reloadTasksAndPriorities}
+        />
       </div>
-      <div className="sidebar">
-        <div className="section">
-          <h1>Priorities</h1>
-          <PriorityList
-            priorities={priorities}
-            onUpdated={reloadTasksAndPriorities}
-          />
-        </div>
+      <div className="app-container">
+        <div className="main-content">
+          <div className="section">
+            <h1>Active Tasks</h1>
+            <TaskList
+              tasks={activeTasks}
+              renderActions={(task) => (
+                <button onClick={() => completeTaskAndReload(task)}>
+                  Complete
+                </button>
+              )}
+            />
+          </div>
 
-        <div className="section">
-          <h2>Add new priority</h2>
-          <PriorityCreator onPriorityAdded={reloadTasksAndPriorities} />
+          <div className="section">
+            <h1>Completed Tasks</h1>
+            <TaskList
+              tasks={completedTasks}
+              renderActions={(task) => (
+                <button onClick={() => reactivateTaskAndReload(task)}>
+                  Reactivate
+                </button>
+              )}
+            />
+          </div>
+
+          <div className="section">
+            <h1>Add new task</h1>
+            <TaskCreator
+              priorities={priorities}
+              onUpdated={reloadTasksAndPriorities}
+            />
+          </div>
+
+          <button
+            className="secondary clear-button"
+            onClick={clearTasksAndReload}
+          >
+            Clear Tasks
+          </button>
         </div>
-        <div className="section">
-          <TimerManager
-            tasks={activeTasks}
-            onTimerEnded={reloadTasksAndPriorities}
-          />
+        <div className="sidebar">
+          <div className="section">
+            <h1>Priorities</h1>
+            <PriorityList
+              priorities={priorities}
+              onUpdated={reloadTasksAndPriorities}
+            />
+          </div>
+
+          <div className="section">
+            <h2>Add new priority</h2>
+            <PriorityCreator onPriorityAdded={reloadTasksAndPriorities} />
+          </div>
         </div>
       </div>
     </div>

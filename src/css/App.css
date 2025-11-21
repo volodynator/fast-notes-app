@@ -854,6 +854,95 @@ body {
   line-height: var(--line-height-tight);
 }
 
+.running-timer {
+  display: flex;
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 20px;
+  border-radius: 999px;
+  width: auto;
+  height: 30px;
+  align-items: center;
+  min-width: 150px;
+  background: var(--color-red-400);
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  gap: 10px;
+}
+
+.stopped-timer {
+  display:inline-flex;
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 20px;
+  border-radius: 999px;
+  width: auto;
+  height: 30px;
+  align-items: center;
+  min-width: 300px;
+  background: var(--color-focus-ring);
+  justify-content: center;
+  letter-spacing: 1px;
+  font-family: monospace;
+  gap: 10px;
+}
+
+.stopped-timer-task {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stopped-timer-task select {
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1;
+  max-width: 120px;
+  height: 20px;
+  min-height: unset;
+}
+
+.stopped-timer-task input {
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1;
+  max-width: 60px;
+  height: 20px;
+  min-height: unset;
+}
+
+
+
+.running-timer-time {
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+  font-family: monospace;
+}
+
+.timer-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.timer-controls button {
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  background: none !important; 
+  box-shadow: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 /* Clear tasks button */
 .clear-button {
   align-self: flex-start;

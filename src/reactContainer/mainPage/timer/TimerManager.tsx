@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { manager, type Task } from '../../../model';
 import { Timer } from './Timer';
+import { CirclePlay, CircleStop, RotateCcw } from 'lucide-react';
 
 interface TimerManagerProps {
   tasks: Task[];
@@ -25,7 +26,7 @@ export function TimerManager({ tasks, onTimerEnded }: TimerManagerProps) {
   };
 
   const handleReset = () => {
-    setIsRunning(false);
+    setIsRunning(true);
     setTimerKey((prev) => prev + 1);
   };
 
@@ -42,60 +43,66 @@ export function TimerManager({ tasks, onTimerEnded }: TimerManagerProps) {
     onTimerEnded();
   };
 
-  return (
-    <div>
-      <div>
-        <h2>Timer</h2>
-        {isRunning && (
-          <Timer
-            key={timerKey}
-            timeToCountdown={timeToCountdownInMins}
-            onComplete={handleTimerEnd}
-          />
-        )}
-      </div>
-
-      <div className="form-row form-row--full">
-        <label>Choose task to work on</label>
-        <select
-          value={selectedTask?.title ?? ''}
-          onChange={(e) => {
-            const title = e.target.value;
-            const task = tasks.find((t) => t.title === title);
-            setSelectedTask(task);
-          }}
-          disabled={isRunning}
-        >
-          <option value="">Please choose one option</option>
-          {tasks.map((t) => (
-            <option key={t.id} value={t.title}>
-              {t.title}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="form-row form-row--full">
-        <label>Select Time: {timeToCountdownInMins} min</label>
-        <input
-          type="number"
-          name="time"
-          min="1"
-          max="50"
-          value={timeToCountdownInMins}
-          onChange={(e) => setTimeToCountdownInMins(Number(e.target.value))}
-          disabled={isRunning}
+  function runningTimer() {
+    return (
+      <div className="running-timer">
+        <Timer
+          key={timerKey}
+          timeToCountdown={timeToCountdownInMins}
+          onComplete={handleTimerEnd}
         />
+        <div className="timer-controls">
+          <button onClick={handleStop}>
+            <CircleStop height={'20px'} />
+          </button>
+          <button onClick={handleReset}>
+            <RotateCcw height={'20px'} />
+          </button>
+        </div>
       </div>
+    );
+  }
 
-      <div className="form-row form-row--full">
-        {!isRunning ? (
-          <button onClick={handleStart}>Start</button>
-        ) : (
-          <button onClick={handleStop}>Pause</button>
-        )}
-        <button onClick={handleReset}>Reset</button>
+  function stoppedTimer() {
+    return (
+      <div className="stopped-timer">
+        <div className="stopped-timer-task">
+          <input
+            type="number"
+            name="time"
+            min="1"
+            max="50"
+            value={timeToCountdownInMins}
+            onChange={(e) => setTimeToCountdownInMins(Number(e.target.value))}
+            disabled={isRunning}
+          />
+          <div>mins</div>
+          <select
+            value={selectedTask?.title ?? ''}
+            onChange={(e) => {
+              const title = e.target.value;
+              const task = tasks.find((t) => t.title === title);
+              setSelectedTask(task);
+            }}
+            disabled={isRunning}
+          >
+            <option value="">select task</option>
+            {tasks.map((t) => (
+              <option key={t.id} value={t.title}>
+                {t.title}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="timer-controls">
+          <button onClick={handleStart}>
+            <CirclePlay height={'20px'} />
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return isRunning ? runningTimer() : stoppedTimer();
 }
