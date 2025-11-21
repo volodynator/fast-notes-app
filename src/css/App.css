@@ -894,7 +894,7 @@ body {
 .stopped-timer-task {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .stopped-timer-task select {
@@ -913,16 +913,25 @@ body {
   max-width: 60px;
   height: 20px;
   min-height: unset;
+  width: 3em;
+  font-size: 1rem;
+  text-align: center;
+  padding: 1px 2px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin: 0 2px;
 }
-
-
 
 .running-timer-time {
   display: inline-block;
   width: 60px;
   text-align: center;
   font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
 
 .timer-controls {
   display: inline-flex;
@@ -942,6 +951,14 @@ body {
   justify-content: center;
   cursor: pointer;
 }
+
+.time-stepper {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  gap: 5px;
+}
+
 
 /* Clear tasks button */
 .clear-button {

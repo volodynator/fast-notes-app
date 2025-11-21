@@ -12,10 +12,13 @@ interface TimerManagerProps {
 export function TimerManager({ tasks, onTimerEnded }: TimerManagerProps) {
   const [timeToCountdownInMins, setTimeToCountdownInMins] = useState(5);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>();
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [timerKey, setTimerKey] = useState(0);
 
   const handleStart = () => {
+    setTimeToCountdownInMins(hours * 60 + minutes);
     if (timeToCountdownInMins > 0) {
       setIsRunning(true);
     }
@@ -67,16 +70,30 @@ export function TimerManager({ tasks, onTimerEnded }: TimerManagerProps) {
     return (
       <div className="stopped-timer">
         <div className="stopped-timer-task">
-          <input
-            type="number"
-            name="time"
-            min="1"
-            max="50"
-            value={timeToCountdownInMins}
-            onChange={(e) => setTimeToCountdownInMins(Number(e.target.value))}
-            disabled={isRunning}
-          />
-          <div>mins</div>
+          <div className="time-stepper">
+            <input
+              id="hours"
+              type="number"
+              min="0"
+              max="23"
+              value={hours}
+              onChange={(e) => setHours(Number(e.target.value))}
+              disabled={isRunning}
+            />
+            <div>H</div>
+
+            <input
+              id="minutes"
+              type="number"
+              min="0"
+              max="59"
+              value={minutes}
+              onChange={(e) => setMinutes(Number(e.target.value))}
+              disabled={isRunning}
+            />
+            <div>M</div>
+          </div>
+
           <select
             value={selectedTask?.title ?? ''}
             onChange={(e) => {
